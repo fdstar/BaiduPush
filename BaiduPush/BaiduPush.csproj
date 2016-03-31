@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4B27BF3F-5419-4CE7-80EE-A899DFCEE949}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BaiduPush</RootNamespace>
+    <AssemblyName>BaiduPush</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Exceptions\BaiduPushException.cs" />
+    <Compile Include="Model\Enums\DeviceType.cs" />
+    <Compile Include="Model\Enums\MsgType.cs" />
+    <Compile Include="Model\Enums\NotificationBasicStyle.cs" />
+    <Compile Include="Model\Enums\OpenType.cs" />
+    <Compile Include="Model\Enums\PushStatus.cs" />
+    <Compile Include="Model\Enums\RangeType.cs" />
+    <Compile Include="Model\Requests\AndroidNotice.cs" />
+    <Compile Include="Model\Requests\AppCreateTagRequest.cs" />
+    <Compile Include="Model\Requests\AppDelTagRequest.cs" />
+    <Compile Include="Model\Requests\AppQueryTagsRequest.cs" />
+    <Compile Include="Model\Requests\IOSNotice.cs" />
+    <Compile Include="Model\Requests\PushAllRequest.cs" />
+    <Compile Include="Model\Requests\PushBatchDeviceRequest.cs" />
+    <Compile Include="Model\Requests\PushRequestBase.cs" />
+    <Compile Include="Model\Requests\PushSingleDeviceRequest.cs" />
+    <Compile Include="Model\Requests\PushTagsRequest.cs" />
+    <Compile Include="Model\Requests\ReportQueryMsgStatusRequest.cs" />
+    <Compile Include="Model\Requests\ReportQueryTimerRecordsRequest.cs" />
+    <Compile Include="Model\Requests\ReportQueryTopicRecordsRequest.cs" />
+    <Compile Include="Model\Requests\ReportStatisticDeviceRequest.cs" />
+    <Compile Include="Model\Requests\ReportStatisticTopicRequest.cs" />
+    <Compile Include="Model\Requests\Request.cs" />
+    <Compile Include="Model\Requests\TagAddDevicesRequest.cs" />
+    <Compile Include="Model\Requests\TagDelDevicesRequest.cs" />
+    <Compile Include="Model\Requests\TagDeviceNumRequest.cs" />
+    <Compile Include="Model\Requests\TimerCancelRequest.cs" />
+    <Compile Include="Model\Requests\TimerQueryListRequest.cs" />
+    <Compile Include="Model\Requests\TopicQueryListRequest.cs" />
+    <Compile Include="Model\Responses\AppCreateTagParams.cs" />
+    <Compile Include="Model\Responses\AppDelTagParams.cs" />
+    <Compile Include="Model\Responses\AppQueryTagsParams.cs" />
+    <Compile Include="Model\Responses\CommonArrayParams.cs" />
+    <Compile Include="Model\Responses\CommonDeviceResult.cs" />
+    <Compile Include="Model\Responses\CommonPushParams.cs" />
+    <Compile Include="Model\Responses\CommonPushResult.cs" />
+    <Compile Include="Model\Responses\ErrorResponse.cs" />
+    <Compile Include="Model\Responses\PushAllParams.cs" />
+    <Compile Include="Model\Responses\PushBatchDeviceParams.cs" />
+    <Compile Include="Model\Responses\PushSingleDeviceParams.cs" />
+    <Compile Include="Model\Responses\PushTagsParams.cs" />
+    <Compile Include="Model\Responses\ReportQueryMsgStatusParams.cs" />
+    <Compile Include="Model\Responses\ReportQueryTimerRecordsParams.cs" />
+    <Compile Include="Model\Responses\ReportQueryTopicRecordsParams.cs" />
+    <Compile Include="Model\Responses\ReportStatisticDeviceParams.cs" />
+    <Compile Include="Model\Responses\ReportStatisticTopicParams.cs" />
+    <Compile Include="Model\Responses\Response.cs" />
+    <Compile Include="Model\Responses\TagAddDevicesParams.cs" />
+    <Compile Include="Model\Responses\TagDelDevicesParams.cs" />
+    <Compile Include="Model\Responses\TagDeviceNumParams.cs" />
+    <Compile Include="Model\Responses\TimerQueryListParams.cs" />
+    <Compile Include="Model\Responses\TopicQueryListParams.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AppCreateTag.cs" />
+    <Compile Include="Services\AppDelTag.cs" />
+    <Compile Include="Services\AppQueryTags.cs" />
+    <Compile Include="Services\BaiduApiBase.cs" />
+    <Compile Include="Services\IBaiduApi.cs" />
+    <Compile Include="Services\PushAll.cs" />
+    <Compile Include="Services\PushBatchDevice.cs" />
+    <Compile Include="Services\PushSingleDevice.cs" />
+    <Compile Include="Services\PushTags.cs" />
+    <Compile Include="Services\ReportQueryMsgStatus.cs" />
+    <Compile Include="Services\ReportQueryTimerRecords.cs" />
+    <Compile Include="Services\ReportQueryTopicRecords.cs" />
+    <Compile Include="Services\ReportStatisticDevice.cs" />
+    <Compile Include="Services\ReportStatisticTopic.cs" />
+    <Compile Include="Services\RequestMapping.cs" />
+    <Compile Include="Services\TagAddDevices.cs" />
+    <Compile Include="Services\TagDelDevices.cs" />
+    <Compile Include="Services\TagDeviceNum.cs" />
+    <Compile Include="Services\TimerCancel.cs" />
+    <Compile Include="Services\TimerQueryList.cs" />
+    <Compile Include="Services\TopicQueryList.cs" />
+    <Compile Include="Utils\DateTimeHelper.cs" />
+    <Compile Include="Utils\MD5Helper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
