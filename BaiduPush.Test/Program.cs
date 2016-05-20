@@ -2,6 +2,7 @@
 using BaiduPush.Model.Requests;
 using BaiduPush.Services;
 using BaiduPush.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +15,41 @@ namespace BaiduPush.Test
     {
         static List<KeyValuePair<string, string>> BaiduKeys = new List<KeyValuePair<string, string>>()
         {
-            new KeyValuePair<string, string>("1XisrMDrTTFxUuGiB9WtU9wF","X50nSRdTVb3wWRr0yMK3AVufywU8Idxm"),
+            new KeyValuePair<string, string>("uKT5SAmy4FpvfGHQlCOMhgeg","kRI0OBGobUh7blAujIOBhQbVk9VUYInQ"),
             new KeyValuePair<string, string>("ifNH0dX1VG9D37Hec8Fq9Cvd","sDRlohkkRFVIoplkfg1qKzhQXpQTsucH"),
         };
         static void Main(string[] args)
         {
-            //string channelId = "4477011936481462289";
+            //string channelId = "3911702798220008642";
             //PushSingleDeviceTest(channelId);
+            PushSingleDeviceTestWithIOS();
             //PushAllTest();
             //ReportStatisticDeviceTest();
-            ReportQueryMsgStatusTest("[\"4138210314396792811\",\"2313034595722776003\"]");
+            //ReportQueryMsgStatusTest("[\"4138210314396792811\",\"2313034595722776003\"]");
             Console.ReadLine();
+        }
+        static async void PushSingleDeviceTestWithIOS()
+        {
+            PushSingleDeviceRequest request = new PushSingleDeviceRequest();
+            request.ApiKey = "10uTP0v1PDrn3jGoQVW1IB4G";
+            request.SecretKey = "ikPAPv6k4bWq7CLfyD0NjFMTWkquYuzw";
+            request.DeviceType = DeviceType.IOS;
+            request.ChannelId = "5128334595467232977";
+            request.MsgType = MsgType.Notice;
+            dynamic aps = $"Test Msg Send To Single IOS Device { request.ChannelId}";
+            request.Msg = JsonConvert.SerializeObject(IOSNotice.GetStandardNotice(aps));
+            request.DeployStatus = 1;
+
+            PushSingleDevice push = new PushSingleDevice();
+            try
+            {
+                var response = await push.Call(request);
+                Console.WriteLine($"PushSingleDevice Response MsgId:{response.ResponseParams.MsgId}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         static async void PushSingleDeviceTest(string channelId)
         {
