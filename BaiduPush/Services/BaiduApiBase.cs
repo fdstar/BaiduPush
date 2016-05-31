@@ -29,6 +29,10 @@ namespace BaiduPush.Services
         /// </summary>
         public static string PrevRestApiUrl = "http://api.tuisong.baidu.com/rest/3.0/";
         /// <summary>
+        /// 当百度RestApi响应为ServiceUnavailable时，最大允许重试次数
+        /// </summary>
+        public static int RetryTimesWhileServiceUnavailable = 3;
+        /// <summary>
         /// Rest Api请求需要的UA
         /// </summary>
         private static readonly string UserAgent;
@@ -90,18 +94,30 @@ namespace BaiduPush.Services
             var dic = this.GetSortedDicionary(request);
             string sign = this.GetSecuritySign(dic, request.SecretKey);
             dic.Add("sign", sign);//生成的签名需要加入字典
-            var response = await this.CallApi(dic);
-            if (response.StatusCode != HttpStatusCode.OK)
+            for (var retryTimes = 0; retryTimes < RetryTimesWhileServiceUnavailable; retryTimes++)
             {
-                //根据百度错误定义，只有状态为200的才是正确响应
-                var error = JsonConvert.DeserializeObject<ErrorResponse>(await response.Content.ReadAsStringAsync());
-                throw new BaiduPushException(error);
+                var response = await this.CallApi(dic);
+                if (response.StatusCode != HttpStatusCode.ServiceUnavailable)
+                {
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        //根据百度错误定义，只有状态为200的才是正确响应
+                        var error = JsonConvert.DeserializeObject<ErrorResponse>(await response.Content.ReadAsStringAsync());
+                        throw new BaiduPushException(error);
+                    }
+                    else
+                    {
+                        string result = await response.Content.ReadAsStringAsync();
+                        return JsonConvert.DeserializeObject<TResponse>(result);
+                    }
+                }
+                System.Diagnostics.Debug.WriteLineIf(retryTimes > 1, string.Format("Status:{0} RetryTimes:{1}", response.StatusCode, retryTimes));
             }
-            else
+            throw new BaiduPushException(new ErrorResponse()
             {
-                string result = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<TResponse>(result);
-            }
+                ErrorCode = (int)HttpStatusCode.ServiceUnavailable,
+                ErrorMsg = HttpStatusCode.ServiceUnavailable.ToString()
+            });
         }
         /// <summary>
         /// 将请求实体转化为SortedDictionary，默认通过反射实现，如觉得存在性能问题，可以在子类重写
